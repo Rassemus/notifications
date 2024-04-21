@@ -1,4 +1,5 @@
-{
+{ 
+  "comment": "//The file contains test users",
   "users": [
     {
       "id": "1513",
