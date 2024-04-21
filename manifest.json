@@ -1,0 +1,8 @@
+{
+    "name": "Notification app",
+    "short_name": "Notification",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "icons": []
+  }
+  

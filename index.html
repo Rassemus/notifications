@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="functions.js" type="text/javascript"></script>
+    <script src="API.js" type="text/javascript"></script>
+    <script src="app.js" type="text/javascript"></script>
+    <!-- <script src="utils.js" type="module"></script> -->
+    <title>Notification app</title>
+</head>
+<body>
+    <h1>I love notifications</h1>
+    <input type="text" id="title" placeholder="Notification Title">
+    <input type="text" id="message" placeholder="Notification Message">
+    <button onclick="sendNotification()">Send Notification</button>
+    <div id="buttonContainer"></div>
+    <p id="subscription-message"></p>
+
+
+    
+    <script>
+        getUsers()
+    </script>
+</body>
+</html>

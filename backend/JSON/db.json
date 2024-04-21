@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "id": "1513",
+      "email": "user@example.com",
+      "password": "$2a$10$RvcwCBXdhFKuiXpzXjbRRukANc14VNgplNqxs3jiCpPWxdg.tZ03K",
+      "name": "user",
+      "_id": "6623bd76ee49f5b0b3ede3eb"
+    },
+    {
+      "id": "855d",
+      "email": "anotheruser@example.com",
+      "password": "$2a$10$kNl9HCnovOCY2nxAr7ZjQOiOU31E6oiB1jfQesQjB5a32Tcwz0v3a",
+      "name": "anotheruser",
+      "_id": "6623bdc5bc10e28bd702ed0b"
+    },
+    {
+      "id": "c749",
+      "email": "thirduser@example.com",
+      "password": "$2a$10$ohk8ypVu5BD76mDz5az6ueaKWQaWvepvBb0sQsWNmjz0gfWtJw.0S",
+      "name": "thirduser",
+      "_id": "6623bdceb2f7da3afe8e54ae"
+    }
+  ],
+  "subscription": [
+    {
+      "id": "26b5",
+      "userId": "6623bdc5bc10e28bd702ed0b",
+      "subscriberId": "6623bd76ee49f5b0b3ede3eb",
+      "subscription": {
+        "endpoint": "https://fcm.googleapis.com/fcm/send/fEjStlIbu5Q:APA91bEyxcelJYPS2Z14_OlaeJyiBheVgIneU80CGWe201iZz4CmYnWEfefu2vNViGG88YK36omT08h4EJH1IzXiRcBTIY9HmNnHMEzEzvmP9uWYRLUOUOZgxIHnqxWAlXwCD9m6YcG2",
+        "expirationTime": null,
+        "keys": {
+          "p256dh": "BLbRVUv2iD5ctfHHDFghX4ZSJWBKsiVCivo2RPx58T2Y_G0SjIRkLovf0NL0hKt6JHNLtFXwv3axF2LKJPv_2gY",
+          "auth": "Vc0JX_QX__XN38cQ33cVCA"
+        }
+      }
+    }
+  ]
+}
