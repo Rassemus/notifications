@@ -47,8 +47,9 @@ const authenticateToken = (req, res, next) => {
 
 app.get('/subscriptions', async (req, res) => {
   let subscription;
+
   try {
-    if(checkJsonServerStatus()){
+    if(await checkJsonServerStatus()){
       subscription = await JSONgetSubscriptions();
     }else{
       subscription = await Subscription.find({}, 'userId');
@@ -64,7 +65,7 @@ app.get('/subscriptions', async (req, res) => {
 app.get('/users', async (req, res) => {
   let users;
   try {
-    if(checkJsonServerStatus()){
+    if(await checkJsonServerStatus()){
       users = await JSONgetUsers();
     }else{
        users = await User.find({}, '_id name');
@@ -86,7 +87,7 @@ app.post('/register', async (req, res) => {
       password: hashedPassword
     });
     //check if the JSON server is being used
-    if(checkJsonServerStatus()){
+    if(await checkJsonServerStatus()){
       JSONregistery(user);
     }else{
       await user.save();
@@ -102,7 +103,7 @@ app.post('/register', async (req, res) => {
 // Endpoint for user login
 app.post('/login', async (req, res) => {
   let user;
-  if(checkJsonServerStatus()){
+  if(await checkJsonServerStatus()){
     user = await JSONuser(req.body.email);
   }else{
     user = await User.findOne({ email: req.body.email });  
@@ -122,12 +123,25 @@ app.post('/login', async (req, res) => {
 app.post('/send-notification', authenticateToken, async (req, res) => {
   const payload = JSON.stringify({ title: req.body.title, message: req.body.message });
   try {
-    const user = await User.findOne({ email: req.user.email });
+    let user;
+    let subscribers;
+
+    if(await checkJsonServerStatus()){
+      user = await JSONuser(req.user.email);
+    }else{
+      user = await User.findOne({ email: req.user.email });
+    }
+  
     if (!user) return res.status(400).send('User not found');
     const userId = user._id;
 
     // get subscriber by user id
-    const subscribers = await Subscription.find({ userId });
+    if(await checkJsonServerStatus()){
+      subscribers = await JSONsubscribtionByUserId(userId);
+    }else{
+      subscribers = await Subscription.find({ userId });
+    }
+    
     if (!subscribers) return res.status(400).send('No subscibers');
 
     subscribers.forEach(async (subscription) => {
@@ -149,7 +163,7 @@ app.post('/subscribe', authenticateToken, async (req, res) => {
     let existingSubscription;
     let newSubscription;
 
-    if(checkJsonServerStatus()){
+    if(await checkJsonServerStatus()){
       user = await JSONuser(req.user.email);
     }else{
       user = await User.findOne({ email: req.user.email });
@@ -160,7 +174,7 @@ app.post('/subscribe', authenticateToken, async (req, res) => {
     const subscriberId = user._id.toString();
 
     // check subscription
-    if(checkJsonServerStatus()){
+    if(await checkJsonServerStatus()){
       existingSubscription = await JSONsubscription( userId, subscriberId, subscription );
     }else{
       existingSubscription = await Subscription.findOne({ userId, subscriberId, subscription });
@@ -171,7 +185,7 @@ app.post('/subscribe', authenticateToken, async (req, res) => {
     }
 
     // Save new subscription
-    if(checkJsonServerStatus()){
+    if(await checkJsonServerStatus()){
       newSubscription = await JSONnewSubscription({ userId, subscriberId, subscription });
     }else{
       newSubscription = new Subscription({ userId, subscriberId, subscription });
@@ -191,14 +205,14 @@ app.post('/unsubscribe', authenticateToken, async (req, res) => {
     const {userId} = req.body;
     let subscription;
     // Get subscription
-    if(checkJsonServerStatus()){
+    if(await checkJsonServerStatus()){
       subscription = await JSONsubscribtionByUserId(userId);
     }else{
       subscription = await Subscription.findOne({userId});
     }
 
     if(subscription){
-      if(checkJsonServerStatus()){
+      if(await checkJsonServerStatus()){
         await JSONunsubscribe(userId);
       }else{
         await Subscription.deleteOne();

@@ -6,10 +6,11 @@ async function checkJsonServerStatus() {
       if (response.status === 200 && response.data) {
         return true;
       } else {
-        return false;
+        return false; // If response is not 200 return false
       }
     } catch (error) {
-      console.error('Error checking JSON Server status:', error);
+      // If error return false.
+      return false;
     }
   }
   module.exports = { checkJsonServerStatus };
